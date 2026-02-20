@@ -1,0 +1,136 @@
+local Players = game:GetService("Players")
+local plr = Players.LocalPlayer
+local gui = plr:WaitForChild("PlayerGui")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "projectMango"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = gui
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 420, 0, 260)
+frame.Position = UDim2.new(0.5, -210, 0.5, -130)
+frame.BackgroundTransparency = 1
+frame.BorderSizePixel = 0
+frame.Active = true
+frame.Draggable = true
+frame.Visible = true
+frame.Parent = screenGui
+
+local bgImage = Instance.new("ImageLabel")
+bgImage.Name = "MangoSkyBackground"
+bgImage.Size = UDim2.new(1, 0, 1, 0)
+bgImage.Position = UDim2.new(0, 0, 0, 0)
+bgImage.BackgroundTransparency = 1
+bgImage.Image = "rbxassetid://11225959021"
+bgImage.ImageTransparency = 0
+bgImage.ScaleType = Enum.ScaleType.Crop
+bgImage.ZIndex = 0
+bgImage.Parent = frame
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 28)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "project mango"
+title.TextColor3 = Color3.fromRGB(255, 255, 100)
+title.Font = Enum.Font.SourceSansBold
+title.TextSize = 22
+title.TextStrokeTransparency = 0.6
+title.TextStrokeColor3 = Color3.fromRGB(0,0,0)
+title.ZIndex = 5
+title.Parent = frame
+
+local box = Instance.new("TextBox")
+box.Size = UDim2.new(1, -16, 0, 180)
+box.Position = UDim2.new(0, 8, 0, 34)
+box.ClearTextOnFocus = false
+box.MultiLine = true
+box.TextWrapped = true
+box.TextXAlignment = Enum.TextXAlignment.Left
+box.TextYAlignment = Enum.TextYAlignment.Top
+box.Text = ""
+box.TextColor3 = Color3.fromRGB(255, 255, 220)
+box.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+box.BackgroundTransparency = 0.65
+box.BorderSizePixel = 1
+box.BorderColor3 = Color3.fromRGB(255, 200, 0)
+box.Font = Enum.Font.Code
+box.TextSize = 15
+box.TextStrokeTransparency = 0.7
+box.TextStrokeColor3 = Color3.fromRGB(0,0,0)
+box.ZIndex = 5
+box.Parent = frame
+
+local function createButton(text, posX, callback)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0, 95, 0, 28)
+    btn.Position = UDim2.new(0, posX, 1, -36)
+    btn.Text = text
+    btn.TextScaled = true
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.BackgroundColor3 = Color3.fromRGB(255, 150, 0)
+    btn.BackgroundTransparency = 0.45
+    btn.BorderColor3 = Color3.fromRGB(255, 100, 0)
+    btn.Font = Enum.Font.SourceSansBold
+    btn.ZIndex = 5
+    btn.Parent = frame
+    btn.MouseButton1Click:Connect(callback)
+end
+
+createButton("Execute", 8, function()
+    pcall(function()
+        loadstring(box.Text)()
+    end)
+end)
+
+createButton("Clear", 110, function()
+    box.Text = ""
+end)
+
+createButton("R6", 212, function()
+    pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/sunday102711-bit/E00KIDD-r6-by-me/refs/heads/main/R6%20Real"))()
+    end)
+end)
+
+local mangoBtn = Instance.new("TextButton")
+mangoBtn.Name = "MangoSkyButton"
+mangoBtn.Size = UDim2.new(0, 90, 0, 26)
+mangoBtn.Position = UDim2.new(0, 320, 1, -34)
+mangoBtn.Text = "Mango Sky"
+mangoBtn.TextScaled = true
+mangoBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+mangoBtn.BackgroundColor3 = Color3.fromRGB(255, 140, 0)
+mangoBtn.BackgroundTransparency = 0.40
+mangoBtn.BorderColor3 = Color3.fromRGB(255, 100, 0)
+mangoBtn.BorderSizePixel = 1
+mangoBtn.Font = Enum.Font.SourceSansBold
+mangoBtn.ZIndex = 5
+mangoBtn.Parent = frame
+
+mangoBtn.MouseButton1Click:Connect(function()
+    pcall(function()
+        local Lighting = game:GetService("Lighting")
+        for _, obj in pairs(Lighting:GetChildren()) do
+            if obj:IsA("Sky") then
+                obj:Destroy()
+            end
+        end
+        
+        local sky = Instance.new("Sky")
+        sky.Parent = Lighting
+        
+        local id = "rbxassetid://11225959021"
+        sky.SkyboxBk = id
+        sky.SkyboxDn = id
+        sky.SkyboxFt = id
+        sky.SkyboxLf = id
+        sky.SkyboxRt = id
+        sky.SkyboxUp = id
+        
+        sky.StarCount = 3000
+        sky.MoonAngularSize = 0
+        sky.SunAngularSize = 0
+    end)
+end)
